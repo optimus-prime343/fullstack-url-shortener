@@ -1,9 +1,11 @@
-import '@/styles/globals.css'
-
 import type { MantineProviderProps } from '@mantine/core'
 import { MantineProvider } from '@mantine/core'
+import { ModalsProvider } from '@mantine/modals'
 import type { AppProps } from 'next/app'
 import { useMemo } from 'react'
+
+import { GetStartedModal } from '../components/get-started-modal'
+import { modalKeys } from '../constants/modal-keys'
 
 export default function App({ Component, pageProps }: AppProps) {
   const theme = useMemo<MantineProviderProps['theme']>(
@@ -15,7 +17,12 @@ export default function App({ Component, pageProps }: AppProps) {
   )
   return (
     <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
-      <Component {...pageProps} />
+      <ModalsProvider
+        modalProps={{ centered: true }}
+        modals={{ [modalKeys.getStartedModal]: GetStartedModal }}
+      >
+        <Component {...pageProps} />
+      </ModalsProvider>
     </MantineProvider>
   )
 }
