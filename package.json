@@ -8,8 +8,8 @@
     "packages/*"
   ],
   "scripts": {
-    "client": "yarn workspace client dev",
-    "server": "yarn workspace server dev",
+    "client": "yarn workspace @url-shortener/client dev",
+    "server": "yarn workspace @url-shortener/server dev",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "dependencies": {
