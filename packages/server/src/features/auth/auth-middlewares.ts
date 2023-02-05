@@ -3,20 +3,26 @@ import createHttpError from 'http-errors'
 import { StatusCodes } from 'http-status-codes'
 
 import { config } from '../../config.js'
+import { prisma } from '../../lib/db.js'
 import { verifyJWTAsync } from './auth-utils.js'
 
 export const checkIsAuthenticated = expressAsyncHandler(
   async (req, res, next) => {
-    const authorization = req.headers.authorization
-    if (authorization === undefined) {
+    const accessToken = req.cookies.accessToken
+    if (!accessToken) {
       return next(
         createHttpError(StatusCodes, 'Unauthorized.Please login first'),
       )
     }
-    const [_, token] = authorization.split('_')
-    const user = await verifyJWTAsync<{ id: string }>(
-      token,
+    const { id } = await verifyJWTAsync<{ id: string }>(
+      accessToken,
       config.JWT_SECRET_KEY,
     )
+    const user = await prisma.user.findFirst({ where: { id } })
+    if (user === null) {
+      return next(createHttpError(StatusCodes.UNAUTHORIZED, 'Unauthorized'))
+    }
+    res.locals.user = user
+    next()
   },
 )

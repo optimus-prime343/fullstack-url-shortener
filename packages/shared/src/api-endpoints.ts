@@ -4,4 +4,7 @@ export const apiEndpoints = {
     login: '/auth/login',
     register: '/auth/register',
   },
+  shortenUrl: {
+    base: '/shorten-url',
+  },
 } as const

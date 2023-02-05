@@ -1,8 +1,9 @@
 {
-  "name": "server",
+  "name": "@url-shortener/server",
   "version": "0.0.0",
   "description": "Minimalistic boilerplate to quick-start Node.js development in TypeScript.",
   "type": "module",
+  "main": "./src/index.ts",
   "engines": {
     "node": ">= 18.12 <19"
   },

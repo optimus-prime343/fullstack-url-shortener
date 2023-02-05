@@ -12,6 +12,8 @@ import { ZodError } from 'zod'
 import { config } from './config.js'
 import authRouter from './features/auth/auth-routes.js'
 import healthCheckRouter from './features/health-check/health-check-routes.js'
+import { openShortenedURL } from './features/shorten-url/shorten-url-controller.js'
+import shortenUrlRouter from './features/shorten-url/shorten-url-routes.js'
 
 const app = Express()
 
@@ -26,6 +28,10 @@ app.use(morgan('dev'))
 app.use('/healthcheck', healthCheckRouter)
 // api endpoints
 app.use(apiEndpoints.base, authRouter)
+app.use(apiEndpoints.base, shortenUrlRouter)
+
+// redirect short urls to original URL
+app.get('/:urlID', openShortenedURL)
 
 // global error handler
 app.use(
