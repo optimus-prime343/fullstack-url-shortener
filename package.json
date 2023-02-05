@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "client": "yarn workspace client dev",
+    "server": "yarn workspace server dev",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-simple-import-sort": "^10.0.0"
+  }
+}
