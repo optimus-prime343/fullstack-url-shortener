@@ -1,3 +1,4 @@
+import type { User } from '@prisma/client'
 import argon2 from 'argon2'
 import expressAsyncHandler from 'express-async-handler'
 import createHttpError from 'http-errors'
@@ -74,5 +75,19 @@ export const register = expressAsyncHandler(async (req, res, next) => {
     success: true,
     message: 'Successfully signed up',
     data: { accessToken },
+  })
+})
+export const profile = expressAsyncHandler((req, res, _next) => {
+  const user = res.locals.user as User | undefined
+  if (user === undefined) {
+    res.status(StatusCodes.OK).send({
+      success: true,
+      data: { user: null },
+    })
+    return
+  }
+  res.status(StatusCodes.OK).send({
+    success: true,
+    data: { user },
   })
 })

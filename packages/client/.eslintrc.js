@@ -1,3 +1,6 @@
+/**
+ * @type {import("eslint").ESLint.Options}
+ */
 module.exports = {
   extends: [
     'eslint:recommended',
@@ -14,4 +17,12 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'solid'],
   root: true,
+  rules: {
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: false,
+      },
+    ],
+  },
 }

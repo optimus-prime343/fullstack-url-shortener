@@ -1,21 +1,45 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { createForm, Field, Form, zodForm } from '@modular-forms/solid'
 import type { Component } from 'solid-js'
+import { Show } from 'solid-js'
+import { createSignal } from 'solid-js'
 
+import { createUserResource } from '../../../resources/create-user-resource'
 import type { LoginPayload } from '../../../schemas/login-schema'
 import { loginSchema } from '../../../schemas/login-schema'
+import { loginUser } from '../../../services/auth-service'
+import { AppAlert } from '../../ui/app-alert'
 import { AppButton } from '../../ui/app-button'
 import { AppInput } from '../../ui/app-input'
 
 export const LoginForm: Component = () => {
+  const [, { refetch: refetchUser }] = createUserResource()
+  const [error, setError] = createSignal<string | undefined>()
+  const [isLoading, setIsLoading] = createSignal<boolean>(false)
+
   const loginForm = createForm<LoginPayload>({
     validate: zodForm(loginSchema),
   })
 
   const handleLogin = (values: LoginPayload) => {
-    console.log(values)
+    setIsLoading(true)
+    loginUser(values)
+      .then(async () => {
+        await refetchUser()
+        setError(undefined)
+      })
+      .catch(error => {
+        setError((error as Error).message)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
   return (
     <Form of={loginForm} class='space-y-4' onSubmit={handleLogin}>
+      <Show when={error() !== undefined}>
+        <AppAlert intent='error' message={error()!} />
+      </Show>
       <Field of={loginForm} name='email'>
         {field => (
           <AppInput
@@ -41,7 +65,9 @@ export const LoginForm: Component = () => {
           />
         )}
       </Field>
-      <AppButton size='fullWidth'>Login</AppButton>
+      <AppButton disabled={isLoading()} size='fullWidth'>
+        Login
+      </AppButton>
     </Form>
   )
 }

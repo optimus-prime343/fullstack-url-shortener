@@ -33,7 +33,6 @@ export const AppInput: Component<AppInputProps> = props => {
     'label',
     'error',
   ])
-  console.log('🚀 ~ file: app-input.tsx:36 ~ local', local)
 
   const inputId = createUniqueId()
 

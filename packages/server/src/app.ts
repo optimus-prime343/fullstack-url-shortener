@@ -19,7 +19,7 @@ const app = Express()
 
 app.use(Express.json())
 app.use(Express.urlencoded({ extended: true }))
-app.use(cors({ origin: [config.FRONTEND_URL] }))
+app.use(cors({ origin: [config.FRONTEND_URL], credentials: true }))
 app.use(helmet())
 app.use(cookieParser())
 app.use(morgan('dev'))
