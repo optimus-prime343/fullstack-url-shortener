@@ -4,7 +4,7 @@ import type { Component } from 'solid-js'
 import { Show } from 'solid-js'
 import { createSignal } from 'solid-js'
 
-import { createUserResource } from '../../../resources/create-user-resource'
+import { useUser } from '../../../context/user'
 import type { LoginPayload } from '../../../schemas/login-schema'
 import { loginSchema } from '../../../schemas/login-schema'
 import { loginUser } from '../../../services/auth-service'
@@ -13,7 +13,7 @@ import { AppButton } from '../../ui/app-button'
 import { AppInput } from '../../ui/app-input'
 
 export const LoginForm: Component = () => {
-  const [, { refetch: refetchUser }] = createUserResource()
+  const { refetchUser } = useUser()
   const [error, setError] = createSignal<string | undefined>()
   const [isLoading, setIsLoading] = createSignal<boolean>(false)
 

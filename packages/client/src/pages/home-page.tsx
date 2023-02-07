@@ -4,11 +4,10 @@ import { Match, Switch } from 'solid-js'
 import { ChooseAuthMethod } from '../components/auth/choose-auth-method'
 import { ErrorView } from '../components/views/error-view'
 import { LoadingView } from '../components/views/loading-view'
-import { createUserResource } from '../resources/create-user-resource'
+import { useUser } from '../context/user'
 
 export const HomePage: Component = () => {
-  const [user, { refetch: refetchUser }] = createUserResource()
-
+  const { user, isLoading, error } = useUser()
   return (
     <Switch
       fallback={() => (
@@ -17,17 +16,14 @@ export const HomePage: Component = () => {
         </div>
       )}
     >
-      <Match when={user.state === 'ready' && user()}>
+      <Match when={user()}>
         <h1>User Loaded</h1>
       </Match>
-      <Match when={user.state === 'refreshing' || user.state === 'pending'}>
+      <Match when={isLoading()}>
         <LoadingView />
       </Match>
-      <Match when={user.state === 'errored'}>
-        <ErrorView
-          description={(user.error as Error).message}
-          onRetry={refetchUser}
-        />
+      <Match when={error()}>
+        <ErrorView description={error()} />
       </Match>
     </Switch>
   )
