@@ -2,6 +2,7 @@ import type { Component } from 'solid-js'
 import { Match, Switch } from 'solid-js'
 
 import { ChooseAuthMethod } from '../components/auth/choose-auth-method'
+import { ShortenURLView } from '../components/auth/shorten-url/shorten-url-view'
 import { ErrorView } from '../components/views/error-view'
 import { LoadingView } from '../components/views/loading-view'
 import { useUser } from '../context/user'
@@ -17,7 +18,7 @@ export const HomePage: Component = () => {
       )}
     >
       <Match when={user()}>
-        <h1>User Loaded</h1>
+        <ShortenURLView />
       </Match>
       <Match when={isLoading()}>
         <LoadingView />

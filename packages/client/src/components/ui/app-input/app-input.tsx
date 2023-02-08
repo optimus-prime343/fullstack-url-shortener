@@ -43,7 +43,7 @@ export const AppInput: Component<AppInputProps> = props => {
       }`
   )
   return (
-    <div>
+    <div class='flex-1'>
       <Show when={local.label !== undefined}>
         <label class={labelClass()} for={inputId}>
           {local.label}

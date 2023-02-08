@@ -1,7 +1,7 @@
 export interface ApiSuccessResponse<TResponseData> {
   success: boolean
   message?: string
-  data?: TResponseData
+  data: TResponseData
 }
 export interface ApiErrorResponse {
   success: boolean
