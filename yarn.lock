@@ -859,6 +859,18 @@
   dependencies:
     "@sinonjs/commons" "^2.0.0"
 
+"@tabler/icons-solidjs@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons-solidjs/-/icons-solidjs-2.2.0.tgz#b8e059bfd9783628546d8ae09d47b5538a0b232f"
+  integrity sha512-9Fo0WqGrg04M9WH9tCy4cnKoZ2Z3Hxa5IDiLGm4Q/rFUwEaB3zRsxiRn+D991gaI+xfmKN0ejFJKj223xa4vaQ==
+  dependencies:
+    "@tabler/icons" "2.2.0"
+
+"@tabler/icons@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-2.2.0.tgz#b3d0682d83d7d341a5dcf517f9247dccf30d7ab1"
+  integrity sha512-s2mm+7JqmLObKdU89Dtiy+USmUpOlACsoXZZPykjAJZC4pK3wMYxLsclJxViWLeLTb6Bc0oga92V7R+9nrj1ZQ==
+
 "@tsconfig/node10@^1.0.7":
   version "1.0.9"
   resolved "https://registry.npmjs.org/@tsconfig/node10/-/node10-1.0.9.tgz"
@@ -4501,6 +4513,11 @@ solid-refresh@^0.4.1:
     "@babel/generator" "^7.18.7"
     "@babel/helper-module-imports" "^7.16.7"
     "@babel/types" "^7.18.4"
+
+solid-toast@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/solid-toast/-/solid-toast-0.4.0.tgz#0c49bc6a9f0e89c83a620a1acfb4f3b2850b5ae9"
+  integrity sha512-ciJbj+n+7KbUN6wfwZsW7lqFESLoQ9sXMG4uJWuHrIw2f0GxX3/wLSKs0Q1YwdTZZRxyRJ1Nwc2eBVcJvs91+g==
 
 source-map-js@^1.0.2:
   version "1.0.2"

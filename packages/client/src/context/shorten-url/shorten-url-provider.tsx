@@ -1,6 +1,6 @@
 import type { Url } from '@url-shortener/server'
 import type { JSX } from 'solid-js'
-import { onMount } from 'solid-js'
+import { createEffect } from 'solid-js'
 import { createSignal } from 'solid-js'
 
 import { getShortenedURLs } from '../../services/shorten-url-service'
@@ -29,10 +29,15 @@ export const ShortenURLProvider = (props: ShortenURLProviderProps) => {
       setIsLoading(false)
     }
   }
-  onMount(async () => {
-    if (user()) {
-      await refetchShortenedURLs()
-    }
+  createEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-extra-semi
+    ;(async () => {
+      if (user()) {
+        await refetchShortenedURLs()
+      }
+    })().catch(error => {
+      console.log(error)
+    })
   })
   return (
     <ShortenURLContext.Provider

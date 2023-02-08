@@ -9,4 +9,5 @@ module.exports = {
   singleQuote: true,
   endOfLine: 'auto',
   plugins: [require('prettier-plugin-tailwindcss')],
+  trailingComma: 'none',
 }
