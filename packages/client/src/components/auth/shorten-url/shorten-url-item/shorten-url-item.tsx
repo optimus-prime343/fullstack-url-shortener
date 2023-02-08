@@ -24,7 +24,7 @@ export const ShortenURLItem: Component<ShortenURLItemProps> = props => {
     }
   }
   return (
-    <div class='space-y-2 rounded-md bg-gray-800 p-4 shadow-sm hover:shadow-md'>
+    <div class='rounded-md bg-gray-800 p-4 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md'>
       <AppText
         title={props.shortenURL.originalUrl}
         intent='body'
@@ -45,6 +45,7 @@ export const ShortenURLItem: Component<ShortenURLItemProps> = props => {
         </AppText>
         <IconExternalLink size={50} />
       </a>
+      <span class='mb-2 block h-0.5 w-full bg-gray-700/50' />
       <div class='flex'>
         <div class='flex items-center gap-2 text-gray-400'>
           <IconEye />

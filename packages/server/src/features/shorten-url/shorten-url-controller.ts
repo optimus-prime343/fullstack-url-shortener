@@ -2,6 +2,7 @@ import type { User } from '@prisma/client'
 import crypto from 'crypto'
 import expressAsyncHandler from 'express-async-handler'
 import { StatusCodes } from 'http-status-codes'
+import openGraphScraper from 'open-graph-scraper'
 
 import { prisma } from '../../lib/db.js'
 import type { CreateShortURLPayload } from './shorten-url-schema.js'
@@ -26,6 +27,24 @@ export const createShortURL = expressAsyncHandler(async (req, res, _next) => {
       userId: user.id,
     },
   })
+  const openGraphResponse = await openGraphScraper({ url: originalURL })
+  if (openGraphResponse.result) {
+    const { ogTitle, ogUrl, ogImage, ogDescription } = openGraphResponse.result
+    await prisma.openGraphMetaData.create({
+      data: {
+        ogTitle: ogTitle ?? null,
+        ogUrl: ogUrl ?? null,
+        ogDescription: ogDescription ?? null,
+        ogImage:
+          typeof ogImage === 'string'
+            ? ogImage
+            : Array.isArray(ogImage)
+            ? ogImage[0].url
+            : ogImage?.url ?? null,
+        urlId: newShortenedURL.id,
+      },
+    })
+  }
   res.status(StatusCodes.OK).send({
     success: true,
     message: 'Successfully shotened URL',
@@ -49,6 +68,7 @@ export const getAllShortenedURLs = expressAsyncHandler(
     const user = res.locals.user as User
     const shortenedURLs = await prisma.url.findMany({
       where: { userId: user.id },
+      include: { openGraphMetaData: true },
     })
     res.status(StatusCodes.OK).send({ success: true, data: { shortenedURLs } })
   },

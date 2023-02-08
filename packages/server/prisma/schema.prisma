@@ -11,14 +11,25 @@ datasource db {
 }
 
 model Url {
-  id           String   @id @default(uuid())
-  originalUrl  String
-  shortenedUrl String
-  totalViews   Int      @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  User         User?    @relation(fields: [userId], references: [id])
-  userId       String?
+  id                String             @id @default(uuid())
+  originalUrl       String
+  shortenedUrl      String
+  totalViews        Int                @default(0)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  User              User?              @relation(fields: [userId], references: [id])
+  userId            String?
+  openGraphMetaData OpenGraphMetaData?
+}
+
+model OpenGraphMetaData {
+  id            String  @id @default(uuid())
+  ogTitle       String?
+  ogUrl         String?
+  ogDescription String?
+  ogImage       String?
+  url           Url     @relation(fields: [urlId], references: [id])
+  urlId         String  @unique
 }
 
 model User {

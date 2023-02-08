@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { Component } from 'solid-js'
 import { Show } from 'solid-js'
 import { createMemo } from 'solid-js'
@@ -39,12 +40,13 @@ export const ShortenURLForm: Component = () => {
   return (
     <>
       <Show when={error() !== undefined}>
-        <AppAlert class='mb-4' message='Hello there' />
+        <AppAlert class='mb-4' message={error()!} />
       </Show>
       <form onSubmit={handleFormSubmit} class='flex gap-1'>
         <AppInput
           placeholder='Enter your lengthy URL'
           class='w-full flex-1'
+          value={lengthyURL()}
           onInput={event => setLengthyURL(event.currentTarget.value)}
         />
         <AppButton type='submit' disabled={!isValidUrl() || isLoading()}>
