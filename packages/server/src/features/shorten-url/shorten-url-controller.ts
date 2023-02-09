@@ -5,13 +5,17 @@ import { StatusCodes } from 'http-status-codes'
 import openGraphScraper from 'open-graph-scraper'
 
 import { prisma } from '../../lib/db.js'
-import type { CreateShortURLPayload } from './shorten-url-schema.js'
+import type {
+  CreateShortURLPayload,
+  DeleteShortenedURLPayload,
+} from './shorten-url-schema.js'
 
 export const createShortURL = expressAsyncHandler(async (req, res, _next) => {
   const user = res.locals.user as User
   const { originalURL } = req.body as CreateShortURLPayload
   const shortenedUrl = await prisma.url.findFirst({
     where: { originalUrl: originalURL, userId: user.id },
+    include: { openGraphMetaData: true },
   })
   if (shortenedUrl !== null) {
     res.status(StatusCodes.OK).send({ success: true, data: { shortenedUrl } })
@@ -71,5 +75,16 @@ export const getAllShortenedURLs = expressAsyncHandler(
       include: { openGraphMetaData: true },
     })
     res.status(StatusCodes.OK).send({ success: true, data: { shortenedURLs } })
+  },
+)
+export const deleteShortendURL = expressAsyncHandler(
+  async (req, res, _next) => {
+    const { id } = req.params as DeleteShortenedURLPayload
+    await prisma.openGraphMetaData.delete({ where: { urlId: id } })
+    await prisma.url.delete({ where: { id } })
+    res.status(StatusCodes.CREATED).send({
+      success: true,
+      message: 'Successfully deleted shortened URL',
+    })
   },
 )

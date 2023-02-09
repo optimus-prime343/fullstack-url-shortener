@@ -5,9 +5,13 @@ import { validateResource } from '../../shared/middlewares/validate-resource.js'
 import { checkIsAuthenticated } from '../auth/auth-middlewares.js'
 import {
   createShortURL,
+  deleteShortendURL,
   getAllShortenedURLs,
 } from './shorten-url-controller.js'
-import { createShortUrlSchema } from './shorten-url-schema.js'
+import {
+  createShortUrlSchema,
+  deleteShortenedURLSchema,
+} from './shorten-url-schema.js'
 
 const shortenUrlRouter = Router()
 
@@ -18,6 +22,11 @@ shortenUrlRouter.post(
   apiEndpoints.shortenUrl.base,
   validateResource(createShortUrlSchema),
   createShortURL,
+)
+shortenUrlRouter.delete(
+  apiEndpoints.shortenUrl.delete,
+  validateResource(deleteShortenedURLSchema),
+  deleteShortendURL,
 )
 
 export default shortenUrlRouter

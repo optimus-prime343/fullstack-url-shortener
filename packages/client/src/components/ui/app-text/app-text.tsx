@@ -8,9 +8,9 @@ const text = cva([], {
     intent: {
       title: 'text-2xl font-bold leading-tight',
       body: 'text-sm font-semibold',
-      caption: 'text-xs text-gray-300',
-    },
-  },
+      caption: 'text-xs text-gray-400'
+    }
+  }
 })
 export type TextProps = VariantProps<typeof text>
 export type AppTextProps = JSX.HTMLAttributes<HTMLParagraphElement> & TextProps

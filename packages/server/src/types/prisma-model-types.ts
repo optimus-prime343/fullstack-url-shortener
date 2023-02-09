@@ -1,3 +1,3 @@
-import { Url, User } from '@prisma/client'
+import { OpenGraphMetaData, Url, User } from '@prisma/client'
 
-export { Url, User }
+export { OpenGraphMetaData, Url, User }

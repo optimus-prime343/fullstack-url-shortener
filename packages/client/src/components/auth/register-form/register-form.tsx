@@ -18,7 +18,7 @@ export const RegisterForm: Component = () => {
   const [isLoading, setIsLoading] = createSignal<boolean>(false)
 
   const registerForm = createForm<RegisterPayload>({
-    validate: zodForm(registerSchema),
+    validate: zodForm(registerSchema)
   })
 
   const handleRegister = (values: RegisterPayload) => {
@@ -37,7 +37,6 @@ export const RegisterForm: Component = () => {
   return (
     <Form of={registerForm} onSubmit={handleRegister} class='space-y-4'>
       <Show when={error() !== undefined}>
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         <AppAlert intent='error' message={error()!} />
       </Show>
       <Field of={registerForm} name='email'>

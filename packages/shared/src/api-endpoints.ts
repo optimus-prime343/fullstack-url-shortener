@@ -7,5 +7,6 @@ export const apiEndpoints = {
   },
   shortenUrl: {
     base: '/shorten-url',
+    delete: '/shorten-url/:id',
   },
 } as const
