@@ -79,9 +79,18 @@ export const getAllShortenedURLs = expressAsyncHandler(
 )
 export const deleteShortendURL = expressAsyncHandler(
   async (req, res, _next) => {
+    const user = res.locals.user as User
     const { id } = req.params as DeleteShortenedURLPayload
-    await prisma.openGraphMetaData.delete({ where: { urlId: id } })
-    await prisma.url.delete({ where: { id } })
+    const url = await prisma.url.findFirst({ where: { id, userId: user.id } })
+    if (url === null) {
+      res.status(StatusCodes.BAD_REQUEST).send({
+        success: false,
+        message: "URL doesn't exist or has been deleted",
+      })
+      return
+    }
+    await prisma.openGraphMetaData.delete({ where: { urlId: url.id } })
+    await prisma.url.delete({ where: { id: url.id } })
     res.status(StatusCodes.CREATED).send({
       success: true,
       message: 'Successfully deleted shortened URL',

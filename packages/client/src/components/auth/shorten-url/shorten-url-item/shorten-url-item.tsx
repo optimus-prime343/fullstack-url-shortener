@@ -39,45 +39,49 @@ export const ShortenURLItem: Component<ShortenURLItemProps> = props => {
     }
   }
   return (
-    <div class='rounded-md bg-gray-800 p-4 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md'>
+    <div class='flex flex-col rounded-md bg-gray-800/50 p-4 transition-all hover:-translate-y-1 hover:shadow-sm'>
       <ShortenURLPreview
         openGraphMetaData={props.shortenURL.openGraphMetaData}
       />
-      <span class='my-2 block h-0.5 w-full bg-gray-700/50' />
-      <AppText
-        title={props.shortenURL.originalUrl}
-        intent='body'
-        class='overflow-hidden overflow-ellipsis whitespace-nowrap'
-      >
-        {props.shortenURL.originalUrl}
-      </AppText>
-      <a
-        class='flex items-center gap-4 text-primary-700'
-        title={props.shortenURL.shortenedUrl}
-        href={props.shortenURL.shortenedUrl}
-      >
+      <div class='mt-auto'>
+        <span class='my-4 block h-[1px] w-full bg-gray-700/50' />
         <AppText
+          title={props.shortenURL.originalUrl}
           intent='body'
-          class='overflow-hidden overflow-ellipsis whitespace-nowrap font-bold'
+          class='overflow-hidden overflow-ellipsis whitespace-nowrap'
         >
-          {props.shortenURL.shortenedUrl}
+          {props.shortenURL.originalUrl}
         </AppText>
-        <IconExternalLink size={50} />
-      </a>
-      <div class='flex'>
-        <div class='flex items-center gap-2 text-gray-400'>
-          <IconEye />
-          <AppText class='font-bold' intent='caption'>
-            {props.shortenURL.totalViews}
+        <a
+          target='_blank'
+          rel='noreferrer'
+          class='my-2 flex items-center gap-4 text-primary-700'
+          title={props.shortenURL.shortenedUrl}
+          href={props.shortenURL.shortenedUrl}
+        >
+          <AppText
+            intent='body'
+            class='overflow-hidden overflow-ellipsis whitespace-nowrap font-bold'
+          >
+            {props.shortenURL.shortenedUrl}
           </AppText>
-        </div>
-        <div class='flex flex-1 justify-end gap-1'>
-          <AppIconButton class='text-primary-800' onClick={handleCopy}>
-            <IconCopy />
-          </AppIconButton>
-          <AppIconButton class='text-red-800' onClick={handleDelete}>
-            <IconTrash />
-          </AppIconButton>
+          <IconExternalLink size={35} />
+        </a>
+        <div class='flex'>
+          <div class='flex items-center gap-2 text-gray-400'>
+            <IconEye />
+            <AppText class='font-bold' intent='caption'>
+              {props.shortenURL.totalViews}
+            </AppText>
+          </div>
+          <div class='flex flex-1 justify-end gap-1'>
+            <AppIconButton class='text-primary-800' onClick={handleCopy}>
+              <IconCopy />
+            </AppIconButton>
+            <AppIconButton class='text-red-800' onClick={handleDelete}>
+              <IconTrash />
+            </AppIconButton>
+          </div>
         </div>
       </div>
     </div>

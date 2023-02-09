@@ -7,17 +7,17 @@ module.exports = {
     extend: {
       colors: {
         primary: colors.cyan,
-        gray: colors.neutral,
+        gray: colors.neutral
       },
       container: {
         screens: {
           '2xl': '1024px',
           xl: '1024px',
-          lg: '1024px',
+          lg: '1024px'
         },
-        center: true,
-      },
-    },
+        center: true
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 }

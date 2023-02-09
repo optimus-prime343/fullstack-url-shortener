@@ -9,7 +9,7 @@ export interface ShortenURListProps {
 }
 export const ShortenURList: Component<ShortenURListProps> = props => {
   return (
-    <div class='grid grid-cols-3 gap-4'>
+    <div class='grid grid-cols-3 gap-2'>
       <For each={props.shortenedURLs}>
         {shortenedURL => <ShortenURLItem shortenURL={shortenedURL} />}
       </For>
