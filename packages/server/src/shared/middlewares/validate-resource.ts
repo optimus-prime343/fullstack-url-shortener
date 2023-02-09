@@ -15,7 +15,7 @@ export const validateResource =
       })
       req.body = data.body
       req.params = data.params
-      req.query = data.params
+      req.query = data.query
       next()
     } catch (error) {
       if (error instanceof ZodError) {

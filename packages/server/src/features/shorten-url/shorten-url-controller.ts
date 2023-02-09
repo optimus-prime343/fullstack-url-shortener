@@ -8,6 +8,7 @@ import { prisma } from '../../lib/db.js'
 import type {
   CreateShortURLPayload,
   DeleteShortenedURLPayload,
+  GetShortenedURLsQuery,
 } from './shorten-url-schema.js'
 
 export const createShortURL = expressAsyncHandler(async (req, res, _next) => {
@@ -70,12 +71,23 @@ export const openShortenedURL = expressAsyncHandler(async (req, res, _next) => {
 export const getAllShortenedURLs = expressAsyncHandler(
   async (req, res, _next) => {
     const user = res.locals.user as User
+    const { page, perPage } = req.query as unknown as GetShortenedURLsQuery
+
+    const total = await prisma.url.count({ where: { userId: user.id } })
+    const skip = (page - 1) * perPage
+    const nextPage = page * perPage < total ? page + 1 : null
+    const prevPage = page > 1 ? page - 1 : null
+
     const shortenedURLs = await prisma.url.findMany({
+      take: perPage,
+      skip,
       where: { userId: user.id },
       include: { openGraphMetaData: true },
       orderBy: { createdAt: 'desc' },
     })
-    res.status(StatusCodes.OK).send({ success: true, data: { shortenedURLs } })
+    res
+      .status(StatusCodes.OK)
+      .send({ success: true, data: { shortenedURLs, nextPage, prevPage } })
   },
 )
 export const deleteShortendURL = expressAsyncHandler(

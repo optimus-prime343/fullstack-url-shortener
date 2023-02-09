@@ -11,13 +11,18 @@ import {
 import {
   createShortUrlSchema,
   deleteShortenedURLSchema,
+  getShortenedUrlSchema,
 } from './shorten-url-schema.js'
 
 const shortenUrlRouter = Router()
 
 shortenUrlRouter.use(checkIsAuthenticated)
 
-shortenUrlRouter.get(apiEndpoints.shortenUrl.base, getAllShortenedURLs)
+shortenUrlRouter.get(
+  apiEndpoints.shortenUrl.base,
+  validateResource(getShortenedUrlSchema),
+  getAllShortenedURLs,
+)
 shortenUrlRouter.post(
   apiEndpoints.shortenUrl.base,
   validateResource(createShortUrlSchema),
