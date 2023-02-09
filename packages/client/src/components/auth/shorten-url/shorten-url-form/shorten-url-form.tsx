@@ -14,7 +14,7 @@ const URL_REGEX =
   /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/
 
 export const ShortenURLForm: Component = () => {
-  const { refetchShortenedURLs } = useShortenURL()
+  const { fetchShortenedURLs } = useShortenURL()
 
   const [lengthyURL, setLengthyURL] = createSignal<string>('')
   const [error, setError] = createSignal<string | undefined>(undefined)
@@ -27,7 +27,7 @@ export const ShortenURLForm: Component = () => {
     setIsLoading(true)
     try {
       await shortenURL(lengthyURL())
-      await refetchShortenedURLs()
+      await fetchShortenedURLs()
       setLengthyURL('')
     } catch (error) {
       if (error instanceof Error) {

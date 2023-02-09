@@ -8,7 +8,7 @@ export interface IShortenURLContext {
   shortenedURLs: Accessor<ShortenedURL[]>
   isLoading: Accessor<boolean>
   error: Accessor<string | undefined>
-  refetchShortenedURLs: () => Promise<void>
+  fetchShortenedURLs: (page?: number) => Promise<number | undefined>
 }
 
 export const ShortenURLContext = createContext<IShortenURLContext | undefined>(

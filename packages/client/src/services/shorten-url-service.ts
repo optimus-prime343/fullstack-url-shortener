@@ -6,7 +6,10 @@ import type {
   ApiErrorResponse,
   ApiSuccessResponse
 } from '../types/api-response'
-import type { ShortenedURL } from '../types/shortened-url'
+import type {
+  ShortenedURL,
+  ShortenedURLPaginatedResponse
+} from '../types/shortened-url'
 
 export const shortenURL = async (url: string): Promise<ShortenedURL> => {
   try {
@@ -24,12 +27,14 @@ export const shortenURL = async (url: string): Promise<ShortenedURL> => {
     throw new Error('Something went wrong')
   }
 }
-export const getShortenedURLs = async (): Promise<ShortenedURL[]> => {
+export const getShortenedURLs = async (
+  page?: number
+): Promise<ShortenedURLPaginatedResponse> => {
   try {
     const { data } = await api.get<
-      ApiSuccessResponse<{ shortenedURLs: ShortenedURL[] }>
-    >(apiEndpoints.shortenUrl.base)
-    return data.data.shortenedURLs
+      ApiSuccessResponse<ShortenedURLPaginatedResponse>
+    >(apiEndpoints.shortenUrl.base, { params: { page } })
+    return data.data
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(
