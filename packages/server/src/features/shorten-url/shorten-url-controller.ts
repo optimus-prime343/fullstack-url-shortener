@@ -73,6 +73,7 @@ export const getAllShortenedURLs = expressAsyncHandler(
     const shortenedURLs = await prisma.url.findMany({
       where: { userId: user.id },
       include: { openGraphMetaData: true },
+      orderBy: { createdAt: 'desc' },
     })
     res.status(StatusCodes.OK).send({ success: true, data: { shortenedURLs } })
   },

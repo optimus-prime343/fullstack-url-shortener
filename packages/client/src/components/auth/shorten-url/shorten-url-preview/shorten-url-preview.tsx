@@ -13,7 +13,7 @@ export const ShortenURLPreview: Component<ShortenURLPreviewProps> = props => {
     <div>
       <Show when={props.openGraphMetaData.ogImage !== null}>
         <img
-          class='aspect-video min-h-[10rem] rounded-md bg-gray-700'
+          class='aspect-video rounded-md bg-gray-700'
           src={props.openGraphMetaData.ogImage!}
           alt='Preview image url'
         />
