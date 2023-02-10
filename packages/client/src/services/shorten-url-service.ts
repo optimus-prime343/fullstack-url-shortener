@@ -11,6 +11,8 @@ import type {
   ShortenedURLPaginatedResponse
 } from '../types/shortened-url'
 
+const shortenedURLCache = new Map<string, ShortenedURLPaginatedResponse>()
+
 export const shortenURL = async (url: string): Promise<ShortenedURL> => {
   try {
     const { data } = await api.post<ApiSuccessResponse<ShortenedURL>>(
@@ -28,13 +30,19 @@ export const shortenURL = async (url: string): Promise<ShortenedURL> => {
   }
 }
 export const getShortenedURLs = async (
-  page?: number
+  page = 1,
+  cache = false
 ): Promise<ShortenedURLPaginatedResponse> => {
-  const url = `${apiEndpoints.shortenUrl.base}?page=${page ?? 1}`
+  const url = `${apiEndpoints.shortenUrl.base}?page=${page}`
+  if (cache && shortenedURLCache.has(url)) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return shortenedURLCache.get(url)!
+  }
   try {
     const { data } = await api.get<
       ApiSuccessResponse<ShortenedURLPaginatedResponse>
     >(url)
+    shortenedURLCache.set(url, data.data)
     return data.data
   } catch (error) {
     if (error instanceof AxiosError) {

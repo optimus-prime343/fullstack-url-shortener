@@ -18,11 +18,14 @@ export const ShortenURLProvider = (props: ShortenURLProviderProps) => {
   const [isLoading, setIsLoading] = createSignal<boolean>(false)
   const [error, setError] = createSignal<string | undefined>(undefined)
 
-  const fetchShortenedURLs = async (page?: number): Promise<void> => {
+  const fetchShortenedURLs = async (
+    page?: number,
+    cache?: boolean
+  ): Promise<void> => {
     setIsLoading(true)
     try {
-      const paginatedResponse = await getShortenedURLs(page)
-      setShortenedURLs(paginatedResponse.shortenedURLs)
+      const paginatedResponse = await getShortenedURLs(page, cache)
+      setShortenedURLs([...paginatedResponse.shortenedURLs])
       if (paginatedResponse.total !== totalInDB()) {
         setTotalInDB(paginatedResponse.total)
       }

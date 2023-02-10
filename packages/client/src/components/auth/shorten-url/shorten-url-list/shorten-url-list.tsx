@@ -24,7 +24,7 @@ export const ShortenURList: Component<ShortenURListProps> = props => {
   )
   const handlePageChange = async (newPage: number) => {
     try {
-      await fetchShortenedURLs(newPage)
+      await fetchShortenedURLs(newPage, true)
       setPage(newPage)
     } catch (error) {
       if (error instanceof Error) {
