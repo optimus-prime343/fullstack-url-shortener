@@ -30,10 +30,11 @@ export const shortenURL = async (url: string): Promise<ShortenedURL> => {
 export const getShortenedURLs = async (
   page?: number
 ): Promise<ShortenedURLPaginatedResponse> => {
+  const url = `${apiEndpoints.shortenUrl.base}?page=${page ?? 1}`
   try {
     const { data } = await api.get<
       ApiSuccessResponse<ShortenedURLPaginatedResponse>
-    >(apiEndpoints.shortenUrl.base, { params: { page } })
+    >(url)
     return data.data
   } catch (error) {
     if (error instanceof AxiosError) {

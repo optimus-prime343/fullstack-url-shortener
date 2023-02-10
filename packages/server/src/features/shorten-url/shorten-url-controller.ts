@@ -87,7 +87,10 @@ export const getAllShortenedURLs = expressAsyncHandler(
     })
     res
       .status(StatusCodes.OK)
-      .send({ success: true, data: { shortenedURLs, nextPage, prevPage } })
+      .send({
+        success: true,
+        data: { shortenedURLs, nextPage, prevPage, total },
+      })
   },
 )
 export const deleteShortendURL = expressAsyncHandler(

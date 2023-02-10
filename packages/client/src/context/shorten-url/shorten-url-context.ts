@@ -5,10 +5,11 @@ import { createContext } from 'solid-js'
 import type { ShortenedURL } from '../../types/shortened-url'
 
 export interface IShortenURLContext {
+  totalInDB: Accessor<number>
   shortenedURLs: Accessor<ShortenedURL[]>
   isLoading: Accessor<boolean>
   error: Accessor<string | undefined>
-  fetchShortenedURLs: (page?: number) => Promise<number | undefined>
+  fetchShortenedURLs: (page?: number) => Promise<void>
 }
 
 export const ShortenURLContext = createContext<IShortenURLContext | undefined>(

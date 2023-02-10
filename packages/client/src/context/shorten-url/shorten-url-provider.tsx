@@ -13,24 +13,23 @@ export interface ShortenURLProviderProps {
 
 export const ShortenURLProvider = (props: ShortenURLProviderProps) => {
   const { user } = useUser()
+  const [totalInDB, setTotalInDB] = createSignal<number>(0)
   const [shortenedURLs, setShortenedURLs] = createSignal<ShortenedURL[]>([])
   const [isLoading, setIsLoading] = createSignal<boolean>(false)
   const [error, setError] = createSignal<string | undefined>(undefined)
 
-  const fetchShortenedURLs = async (
-    page?: number
-  ): Promise<number | undefined> => {
-    console.log(`ren render`)
+  const fetchShortenedURLs = async (page?: number): Promise<void> => {
     setIsLoading(true)
     try {
       const paginatedResponse = await getShortenedURLs(page)
-      setShortenedURLs(prev => [...prev, ...paginatedResponse.shortenedURLs])
-      return paginatedResponse.nextPage ?? undefined
+      setShortenedURLs(paginatedResponse.shortenedURLs)
+      if (paginatedResponse.total !== totalInDB()) {
+        setTotalInDB(paginatedResponse.total)
+      }
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message)
       }
-      return undefined
     } finally {
       setIsLoading(false)
     }
@@ -47,7 +46,7 @@ export const ShortenURLProvider = (props: ShortenURLProviderProps) => {
   })
   return (
     <ShortenURLContext.Provider
-      value={{ shortenedURLs, isLoading, error, fetchShortenedURLs }}
+      value={{ totalInDB, shortenedURLs, isLoading, error, fetchShortenedURLs }}
     >
       {props.children}
     </ShortenURLContext.Provider>

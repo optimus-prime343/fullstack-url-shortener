@@ -7,7 +7,7 @@ export const createShortUrlSchema = z.object({
 })
 export const getShortenedUrlSchema = z.object({
   query: z.object({
-    perPage: z.number({ coerce: true }).default(3),
+    perPage: z.number({ coerce: true }).default(10),
     page: z.number({ coerce: true }).default(1),
   }),
 })

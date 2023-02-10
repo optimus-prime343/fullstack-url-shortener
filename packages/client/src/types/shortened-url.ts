@@ -5,4 +5,5 @@ export interface ShortenedURLPaginatedResponse {
   nextPage: number | null
   prevPage: number | null
   shortenedURLs: ShortenedURL[]
+  total: number
 }
