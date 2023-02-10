@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import type { NextFunction, Request, Response } from 'express'
 import Express from 'express'
+import rateLimiter from 'express-rate-limit'
 import helmet from 'helmet'
 import type { HttpError } from 'http-errors'
 import { StatusCodes } from 'http-status-codes'
@@ -23,6 +24,11 @@ app.use(cors({ origin: [config.FRONTEND_URL], credentials: true }))
 app.use(helmet())
 app.use(cookieParser())
 app.use(morgan('dev'))
+app.use(
+  rateLimiter({
+    message: "You can't make any more requests at the moment. Try again later",
+  }),
+)
 
 // healthcheck endpoint
 app.use('/healthcheck', healthCheckRouter)
