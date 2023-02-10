@@ -26,6 +26,7 @@ app.use(cookieParser())
 app.use(morgan('dev'))
 app.use(
   rateLimiter({
+    windowMs: 10_000,
     message: "You can't make any more requests at the moment. Try again later",
   }),
 )
