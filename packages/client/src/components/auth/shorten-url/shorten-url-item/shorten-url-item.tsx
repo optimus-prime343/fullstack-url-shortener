@@ -5,9 +5,11 @@ import {
   IconTrash
 } from '@tabler/icons-solidjs'
 import type { Component, JSX } from 'solid-js'
+import { Show } from 'solid-js'
 import { splitProps } from 'solid-js'
 import toast from 'solid-toast'
 
+import WarningImage from '../../../../assets/images/warning.png'
 import { useShortenURL } from '../../../../context/shorten-url'
 import { deleteShortenedURL } from '../../../../services/shorten-url-service'
 import type { ShortenedURL } from '../../../../types/shortened-url'
@@ -46,9 +48,22 @@ export const ShortenURLItem: Component<ShortenURLItemProps> = props => {
       {...rest}
       class='flex flex-col rounded-md bg-gray-800/50 p-4 transition-all hover:-translate-y-1 hover:shadow-sm'
     >
-      <ShortenURLPreview
-        openGraphMetaData={props.shortenURL.openGraphMetaData}
-      />
+      <Show
+        when={props.shortenURL.openGraphMetaData !== null}
+        fallback={
+          <div>
+            <img src={WarningImage} />
+            <AppText class='text-center text-red-800' intent='body'>
+              No metadata found
+            </AppText>
+          </div>
+        }
+      >
+        <ShortenURLPreview
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          openGraphMetaData={props.shortenURL.openGraphMetaData!}
+        />
+      </Show>
       <div class='mt-auto'>
         <span class='my-4 block h-[1px] w-full bg-gray-700/50' />
         <AppText

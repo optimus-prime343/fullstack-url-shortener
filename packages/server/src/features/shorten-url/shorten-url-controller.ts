@@ -85,12 +85,10 @@ export const getAllShortenedURLs = expressAsyncHandler(
       include: { openGraphMetaData: true },
       orderBy: { createdAt: 'desc' },
     })
-    res
-      .status(StatusCodes.OK)
-      .send({
-        success: true,
-        data: { shortenedURLs, nextPage, prevPage, total },
-      })
+    res.status(StatusCodes.OK).send({
+      success: true,
+      data: { shortenedURLs, nextPage, prevPage, total },
+    })
   },
 )
 export const deleteShortendURL = expressAsyncHandler(
