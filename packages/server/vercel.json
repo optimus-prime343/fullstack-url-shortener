@@ -3,5 +3,6 @@
   "version": 2,
   "buildCommand": "yarn build:release",
   "devCommand": "yarn dev",
-  "outputDirectory": "build"
+  "outputDirectory": "build",
+  "installCommand": "yarn"
 }

@@ -31,6 +31,9 @@ app.use(
   }),
 )
 
+app.get('/', (req, res, _next) => {
+  res.send(`<h1>URL SHORTENER BACKEND</h1>`)
+})
 // healthcheck endpoint
 app.use('/healthcheck', healthCheckRouter)
 // api endpoints
