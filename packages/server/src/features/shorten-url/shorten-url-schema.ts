@@ -13,7 +13,7 @@ export const getShortenedUrlSchema = z.object({
 })
 export const deleteShortenedURLSchema = z.object({
   params: z.object({
-    id: z.string().uuid(),
+    id: z.string(),
   }),
 })
 export type CreateShortURLPayload = z.infer<typeof createShortUrlSchema>['body']

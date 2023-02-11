@@ -1,7 +1,7 @@
 import type { User } from '@prisma/client'
-import crypto from 'crypto'
 import expressAsyncHandler from 'express-async-handler'
 import { StatusCodes } from 'http-status-codes'
+import { nanoid } from 'nanoid'
 import openGraphScraper from 'open-graph-scraper'
 
 import { prisma } from '../../lib/db.js'
@@ -22,7 +22,7 @@ export const createShortURL = expressAsyncHandler(async (req, res, _next) => {
     res.status(StatusCodes.OK).send({ success: true, data: { shortenedUrl } })
     return
   }
-  const shortenedURLId = crypto.randomUUID()
+  const shortenedURLId = nanoid(11)
   const shortenedURL = `${req.protocol}://${req.get('host')}/${shortenedURLId}`
   const newShortenedURL = await prisma.url.create({
     data: {

@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Url {
-  id                String             @id @default(uuid())
+  id                String             @id
   originalUrl       String
   shortenedUrl      String
   totalViews        Int                @default(0)

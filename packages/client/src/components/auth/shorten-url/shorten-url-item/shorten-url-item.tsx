@@ -86,7 +86,7 @@ export const ShortenURLItem: Component<ShortenURLItemProps> = props => {
           >
             {local.shortenURL.shortenedUrl}
           </AppText>
-          <IconExternalLink size={35} />
+          <IconExternalLink size={25} />
         </a>
         <div class='flex'>
           <div class='flex items-center gap-2 text-gray-400'>
