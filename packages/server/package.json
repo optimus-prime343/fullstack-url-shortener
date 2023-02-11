@@ -34,6 +34,7 @@
   },
   "scripts": {
     "dev": "nodemon",
+    "db:migration": "npx prisma migrate dev --name initial_migration",
     "start": "node build/src/main.js",
     "clean": "rimraf coverage build tmp",
     "prebuild": "npm run lint",

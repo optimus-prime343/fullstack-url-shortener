@@ -1,0 +1,50 @@
+version: '3.7'
+services:
+  client:
+    build:
+      context: .
+    container_name: client
+    ports:
+      - '3000:3000'
+    entrypoint: ['yarn', 'workspace', '@url-shortener/client', 'dev']
+    environment:
+      VITE_BACKEND_API_URL: 'http://server:8000/api/v1'
+    volumes:
+      - .:/home/app
+      - /home/app/node_modules
+      - /home/app/packages/client/node_modules
+      - /home/app/packages/shared/node_modules
+      - /home/app/packages/server/node_modules
+    depends_on:
+      - server
+  server:
+    build:
+      context: .
+    container_name: server
+    ports:
+      - '8000:8000'
+    command: "bash -c 'yarn workspace @url-shortener/server db:migration && yarn workspace @url-shortener/server dev'"
+    environment:
+      NODE_ENV: 'development'
+      DATABASE_URL: 'postgresql://sachin:sachin@db:5432/url-shortener?schema=public&pool_timeout=1000'
+      JWT_SECRET_KEY: 'RtpVjbQT67kFzVpVCxmM7Kq3yCzrymbcHo6BWfxL24KCCnUhxVZm36VXu8fMVEHH6MA7fhgfMaKLCi3xCYLdDkHZ6AS6aH6LZoXfWWepvLSCxEZqCCpjevpEwHmzbiQb'
+      JWT_EXPIRES_IN: '30d'
+      FRONTEND_URL: 'http://client:3000'
+    volumes:
+      - .:/home/app
+      - /home/app/node_modules/
+      - /home/app/packages/server/node_modules
+      - /home/app/packages/shared/node_modules
+    depends_on:
+      - db
+  db:
+    container_name: database
+    restart: unless-stopped
+    image: postgres:12
+    environment:
+      - POSTGRES_USER=sachin
+      - POSTGRES_PASSWORD=sachin
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
