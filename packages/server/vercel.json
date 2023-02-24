@@ -4,5 +4,5 @@
   "buildCommand": "yarn build:release",
   "devCommand": "yarn dev",
   "outputDirectory": "build",
-  "installCommand": "yarn"
+  "installCommand": "yarn install"
 }

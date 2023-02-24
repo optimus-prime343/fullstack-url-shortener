@@ -34,7 +34,6 @@
   },
   "scripts": {
     "dev": "nodemon",
-    "db:migration": "npx prisma migrate dev --name initial_migration",
     "start": "node build/src/main.js",
     "clean": "rimraf coverage build tmp",
     "prebuild": "npm run lint",
@@ -45,7 +44,8 @@
     "test": "jest --coverage",
     "prettier": "prettier --config .prettierrc --write .",
     "test:watch": "jest --watch",
-    "deploy": "npx vercel"
+    "deploy": "npx vercel",
+    "postinstall": "prisma generate"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
